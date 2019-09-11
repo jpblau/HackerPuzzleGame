@@ -10,7 +10,7 @@ using UnityEngine;
 public class LevelManager : MonoBehaviour
 {
     private int roundNumber;
-    private List<AAUnit> redTeamUnits;
+    public List<AAUnit> redTeamUnits = new List<AAUnit>();
     private List<AAUnit> blueTeamUnits;
 
     public enum State { Start, Placement, ActiveRound, Reset, Complete}
@@ -24,16 +24,21 @@ public class LevelManager : MonoBehaviour
     {
         roundNumber = 0;
         UIM = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager>();
+        UIM.SetLevelManagerValues(this);
 
-        redTeamUnits = new List<AAUnit>();
+        //redTeamUnits = new List<AAUnit>();
         blueTeamUnits = new List<AAUnit>();
 
-        SetLevelState(State.ActiveRound);
+        SetLevelState(State.Start);
+        BeginStart();
     }
 
     // Update is called once per frame
     void Update()
     {
+        #region START
+
+        #endregion
 
         #region ROUNDACTIVE
         if (LevelState.Equals(State.ActiveRound))
@@ -56,6 +61,39 @@ public class LevelManager : MonoBehaviour
         #endregion
     }
 
+    #region Start State Functions
+    /// <summary>
+    /// Begins the Start State
+    /// </summary>
+    private void BeginStart()
+    {
+        UIM.ToggleStartRoundUI();
+    }
+
+
+    /// <summary>
+    /// Ends the Start State
+    /// </summary>
+    public void EndStart()
+    {
+        SetLevelState(State.ActiveRound);       //TODO CURENTLY STARTS THE ACTIVEROUND RATHER THAN GOING TO PLACEMENT
+        BeginRound();
+    }
+    #endregion
+
+    #region ActiveRound State Functions
+    /// <summary>
+    /// Start the current round, and get all the units moving
+    /// </summary>
+    private void BeginRound()
+    {
+        // go through the red team and get them all moving TODO do this for the blue team as well
+        for (int i = 0; i < redTeamUnits.Count; i++)
+        {
+            redTeamUnits[i].BeginActiveRound();
+        }
+    }
+
     /// <summary>
     /// Ends the current round, and updates any necessary functions
     /// </summary>
@@ -65,6 +103,8 @@ public class LevelManager : MonoBehaviour
         UIM.SetRoundText(roundNumber);
         SetLevelState(State.Reset);      
     }
+
+    #endregion
 
     /// <summary>
     /// Set our LevelState to the given value

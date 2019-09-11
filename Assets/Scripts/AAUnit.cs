@@ -16,7 +16,7 @@ public class AAUnit : MonoBehaviour
     private NavMeshAgent nav;
     
     public enum State { Shelved, Idle, Moving, Gathering, Dead}
-    private State AAUnitState;
+    public State AAUnitState;
 
     private Vector3 placedPosition;
 
@@ -32,14 +32,21 @@ public class AAUnit : MonoBehaviour
         }
 
         // Set our unit's initial state
-        AAUnitState = State.Moving;
+        AAUnitState = State.Idle;
+        nav.isStopped = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        // If our target moves, update our destination based on its position
-        if (doesTargetMove)
+        // If we're not actively supposed to be moving, then don't go to our destination
+        /*if (!nav.isStopped && !(GetAAUnitState().Equals("Moving")))
+        {
+            nav.isStopped = true;
+        }*/
+
+        // If our target moves (and we're not stopped), update our destination based on its position
+        if (!nav.isStopped && doesTargetMove)
         {
             SetDestination(target.GetLocation());
         }
@@ -81,6 +88,15 @@ public class AAUnit : MonoBehaviour
     public State GetAAUnitState()
     {
         return this.AAUnitState;
+    }
+
+    /// <summary>
+    /// The method called when a round begins, which gets this unit moving towards its destination
+    /// </summary>
+    public void BeginActiveRound()
+    {
+        this.AAUnitState = State.Moving;
+        nav.isStopped = false;
     }
 
 

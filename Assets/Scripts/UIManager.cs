@@ -28,6 +28,8 @@ public class UIManager : MonoBehaviour
     #endregion
 
     public Text roundText;
+    public Canvas canv_startRoundUI;
+    private LevelManager LM;
 
 
     // Start is called before the first frame update
@@ -43,6 +45,20 @@ public class UIManager : MonoBehaviour
     }
 
     /// <summary>
+    /// Enables and resets all the UI that starts a round
+    /// </summary>
+    public void ToggleStartRoundUI()
+    {
+        canv_startRoundUI.enabled = !canv_startRoundUI.enabled;
+    }
+
+    public void SpinButtonPressed()
+    {
+        LM.EndStart();
+        ToggleStartRoundUI();
+    }
+
+    /// <summary>
     /// Sets the text that keeps track of the current round number
     /// </summary>
     /// <param name="roundNumber"></param>
@@ -53,5 +69,8 @@ public class UIManager : MonoBehaviour
 
 
     // NEED A NEWLEVELLOADED FUNCTION THAT WILL UPDATE ALL THE UI ELEMENTS WITH VALUES FROM THE LEVELMANAGER
-
+    public void SetLevelManagerValues(LevelManager lm)
+    {
+        this.LM = lm;
+    }
 }
