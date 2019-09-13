@@ -27,6 +27,8 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
+    public UIManager UIM;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -47,5 +49,15 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Loading Scene: " + sceneName);
         SceneManager.LoadScene(sceneName);
+    }
+
+    /// <summary>
+    /// Called by LevelManger at the end of a level, returning the player to the Main Menu scene 
+    /// with the level select screen active
+    /// </summary>
+    public void LevelComplete()
+    {
+        this.LoadNewScene("MainMenu");
+        UIM.SetVis_LevelSelectUI(true);
     }
 }

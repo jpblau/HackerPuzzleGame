@@ -1148,7 +1148,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 607481752}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -1229,7 +1229,7 @@ NavMeshAgent:
   m_AngularSpeed: 120
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
+  m_AutoBraking: 0
   m_AutoRepath: 1
   m_Height: 1
   m_BaseOffset: 0.5
@@ -1249,6 +1249,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 1240974910}
   AAUnitState: 0
+  crownJewelsReturnLocation: {fileID: 655085317}
+  heldItem: {fileID: 0}
 --- !u!54 &607481759
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1277,8 +1279,10 @@ GameObject:
   - component: {fileID: 655085315}
   - component: {fileID: 655085314}
   - component: {fileID: 655085313}
+  - component: {fileID: 655085317}
+  - component: {fileID: 655085318}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: ReturnLocation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1292,7 +1296,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 655085312}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -1357,6 +1361,31 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &655085317
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 655085312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1452ef9fc3787a8489cb283f89c43383, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moves: 0
+--- !u!114 &655085318
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 655085312}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0299e88668a163747ad86b4f4ac9b43f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &691237350
 GameObject:
   m_ObjectHideFlags: 0
@@ -1918,6 +1947,7 @@ GameObject:
   - component: {fileID: 1240974907}
   - component: {fileID: 1240974906}
   - component: {fileID: 1240974910}
+  - component: {fileID: 1240974911}
   m_Layer: 0
   m_Name: CrownJewels
   m_TagString: Untagged
@@ -1933,7 +1963,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1240974905}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
@@ -2011,6 +2041,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moves: 0
+--- !u!114 &1240974911
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1240974905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe3841e104575fc4e8f39ff810360096, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 0
+  isOwned: 0
 --- !u!1 &1423576073
 GameObject:
   m_ObjectHideFlags: 0

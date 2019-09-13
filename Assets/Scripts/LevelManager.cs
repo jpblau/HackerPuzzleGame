@@ -13,8 +13,11 @@ public class LevelManager : MonoBehaviour
     public List<AAUnit> redTeamUnits = new List<AAUnit>();
     private List<AAUnit> blueTeamUnits;
 
-    public enum State { Start, Placement, ActiveRound, Reset, Complete}
+    public enum State { Start, Placement, ActiveRound, Reset, Complete }
     public State LevelState;
+
+    private bool areCrownJewelsHome = true;
+    private bool hasPlayerWon = false;
 
     [SerializeField]
     private UIManager UIM;
@@ -59,6 +62,9 @@ public class LevelManager : MonoBehaviour
             }
         }
         #endregion
+
+        #region RESET
+        #endregion
     }
 
     #region Start State Functions
@@ -76,7 +82,20 @@ public class LevelManager : MonoBehaviour
     /// </summary>
     public void EndStart()
     {
-        SetLevelState(State.ActiveRound);       //TODO CURENTLY STARTS THE ACTIVEROUND RATHER THAN GOING TO PLACEMENT
+        SetLevelState(State.Placement);       //TODO CURENTLY STARTS THE ACTIVEROUND RATHER THAN GOING TO PLACEMENT
+        BeginPlacement();
+    }
+    #endregion
+
+    #region Placement State Functions
+    private void BeginPlacement()
+    {
+        UIM.TogglePlacementUI();
+    }
+
+    public void EndPlacement()
+    {
+        SetLevelState(State.ActiveRound);
         BeginRound();
     }
     #endregion
@@ -101,7 +120,76 @@ public class LevelManager : MonoBehaviour
     {
         roundNumber++;
         UIM.SetRoundText(roundNumber);
-        SetLevelState(State.Reset);      
+        SetLevelState(State.Reset);
+        BeginReset();
+    }
+
+    #endregion
+
+    #region Reset State Functions
+    /// <summary>
+    /// This function should take every unit and resets it
+    /// </summary>
+    private void BeginReset()
+    {
+        // Reset all the red team members
+        for (int i = 0; i < redTeamUnits.Count; i++)
+        {
+            redTeamUnits[i].Reset();
+        }
+        //TODO should also change fog of war values back
+
+        EndReset();
+    }
+
+    private void EndReset()
+    {
+        SetLevelState(State.Placement);
+        BeginPlacement();
+    }
+    #endregion
+
+    #region Complete State Functions
+    /// <summary>
+    /// Called when the player has won the level
+    /// </summary>
+    public void PlayerWin()
+    {
+        hasPlayerWon = true;
+        SetLevelState(State.Complete);
+        BeginComplete();
+    }
+
+    /// <summary>
+    /// Called when the player has definitively lost the level
+    /// </summary>
+    public void PlayerLose()
+    {
+
+    }
+
+    private void BeginComplete()
+    {
+        if (hasPlayerWon)
+        {
+            UIM.ToggleLevelWinUI();
+        }
+        else
+        {
+            UIM.ToggleLevelLoseUI();
+        }
+
+        // We wait to call EndComplete until the user hits a button that takes them back to the level select screen
+    }
+
+    /// <summary>
+    /// Called when the player hits a "back to level select" button after completing the level
+    /// </summary>
+    public void EndComplete()
+    {
+        GameManager GM = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
+        UIM.SetVis_LevelSelectUI(true);
+        GM.LoadNewScene("Main Menu");
     }
 
     #endregion
@@ -114,5 +202,7 @@ public class LevelManager : MonoBehaviour
     {
         LevelState = newState;
         Debug.Log("Our Current Level State is: " + LevelState);
+
+        //TODO ALL THE BEGINPLACEMENT AND BEGINROUND FUNCTIONS SHOULD BE CALLED FROM A SWITCH STATEMENT IN HERE, NOT FROM INDIVIDUAL FUNCTIONS
     }
 }

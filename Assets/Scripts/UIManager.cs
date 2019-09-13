@@ -28,7 +28,11 @@ public class UIManager : MonoBehaviour
     #endregion
 
     public Text roundText;
+    public Canvas canv_LevelSelectUI;
     public Canvas canv_startRoundUI;
+    public Canvas canv_placementUI;
+    public Canvas canv_winUI;
+    public Canvas canv_loseUI;
     private LevelManager LM;
 
 
@@ -44,6 +48,7 @@ public class UIManager : MonoBehaviour
         
     }
 
+    #region Start State
     /// <summary>
     /// Enables and resets all the UI that starts a round
     /// </summary>
@@ -54,9 +59,44 @@ public class UIManager : MonoBehaviour
 
     public void SpinButtonPressed()
     {
-        LM.EndStart();
         ToggleStartRoundUI();
+        LM.EndStart();
+        
     }
+    #endregion
+
+
+    #region Placement State
+    public void TogglePlacementUI()
+    {
+        canv_placementUI.enabled = !canv_placementUI.enabled;
+    }
+
+    public void BeginRoundButtonPressed()
+    {
+        TogglePlacementUI();
+        LM.EndPlacement(); 
+    }
+    #endregion
+
+    #region Complete State
+    public void ToggleLevelWinUI()  //TODO change all these to take a bool as a param, and set enabled to that value
+    {
+        canv_winUI.enabled = !canv_winUI.enabled;
+    }
+
+    public void ToggleLevelLoseUI()
+    {
+        canv_loseUI.enabled = !canv_loseUI.enabled;
+    }
+    #endregion
+
+    #region Level Select Screen
+    public void SetVis_LevelSelectUI(bool enabled)
+    {
+        canv_LevelSelectUI.enabled = enabled;
+    }
+    #endregion
 
     /// <summary>
     /// Sets the text that keeps track of the current round number
@@ -68,7 +108,7 @@ public class UIManager : MonoBehaviour
     }
 
 
-    // NEED A NEWLEVELLOADED FUNCTION THAT WILL UPDATE ALL THE UI ELEMENTS WITH VALUES FROM THE LEVELMANAGER
+    // TODO NEED A NEWLEVELLOADED FUNCTION THAT WILL UPDATE ALL THE UI ELEMENTS WITH VALUES FROM THE LEVELMANAGER
     public void SetLevelManagerValues(LevelManager lm)
     {
         this.LM = lm;

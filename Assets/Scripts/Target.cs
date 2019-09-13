@@ -8,6 +8,7 @@ public class Target : MonoBehaviour
 {
     public bool moves;
     private bool isActive = true;
+    bool isBeingCarried = false;    //TODO is this the best implementation of this?
 
     // Start is called before the first frame update
     void Start()
