@@ -25,12 +25,15 @@ public class LevelManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        roundNumber = 0;
-        UIM = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager>();
-        UIM.SetLevelManagerValues(this);
+        roundNumber = 1;
+        
 
         //redTeamUnits = new List<AAUnit>();
         blueTeamUnits = new List<AAUnit>();
+
+
+        UIM = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager>();
+        UIM.NewLevelWasLoaded(this, roundNumber);
 
         SetLevelState(State.Start);
         BeginStart();
@@ -73,7 +76,7 @@ public class LevelManager : MonoBehaviour
     /// </summary>
     private void BeginStart()
     {
-        UIM.ToggleStartRoundUI();
+        UIM.SetVis_StartRoundUI(true);
     }
 
 
@@ -82,7 +85,7 @@ public class LevelManager : MonoBehaviour
     /// </summary>
     public void EndStart()
     {
-        SetLevelState(State.Placement);       //TODO CURENTLY STARTS THE ACTIVEROUND RATHER THAN GOING TO PLACEMENT
+        SetLevelState(State.Placement);  
         BeginPlacement();
     }
     #endregion
@@ -90,7 +93,7 @@ public class LevelManager : MonoBehaviour
     #region Placement State Functions
     private void BeginPlacement()
     {
-        UIM.TogglePlacementUI();
+        UIM.SetVis_PlacementUI(true);
     }
 
     public void EndPlacement()
@@ -168,15 +171,16 @@ public class LevelManager : MonoBehaviour
 
     }
 
+    // Only called once the player has won or lost
     private void BeginComplete()
     {
         if (hasPlayerWon)
         {
-            UIM.ToggleLevelWinUI();
+            UIM.SetVis_LevelWinUI(true);
         }
         else
         {
-            UIM.ToggleLevelLoseUI();
+            UIM.SetVis_LevelLoseUI(true);
         }
 
         // We wait to call EndComplete until the user hits a button that takes them back to the level select screen
@@ -188,8 +192,8 @@ public class LevelManager : MonoBehaviour
     public void EndComplete()
     {
         GameManager GM = GameObject.FindGameObjectWithTag("GameManager").GetComponent<GameManager>();
-        UIM.SetVis_LevelSelectUI(true);
-        GM.LoadNewScene("Main Menu");
+        GM.LevelComplete();
+        //TODO I DONT THINK THIS FUNCTION ACTUALLY EVER GETS CALLED
     }
 
     #endregion

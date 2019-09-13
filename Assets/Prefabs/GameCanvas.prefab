@@ -871,7 +871,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1239139377917737220}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 2
   m_Camera: {fileID: 0}
@@ -2398,6 +2398,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   roundText: {fileID: 7070649860128820175}
+  canv_LevelCanvasUI: {fileID: 7696638141233746904}
   canv_LevelSelectUI: {fileID: 4493788553560315180}
   canv_startRoundUI: {fileID: 3782175952480150623}
   canv_placementUI: {fileID: 1376841307684408506}

@@ -28,6 +28,7 @@ public class UIManager : MonoBehaviour
     #endregion
 
     public Text roundText;
+    public Canvas canv_LevelCanvasUI;
     public Canvas canv_LevelSelectUI;
     public Canvas canv_startRoundUI;
     public Canvas canv_placementUI;
@@ -52,14 +53,14 @@ public class UIManager : MonoBehaviour
     /// <summary>
     /// Enables and resets all the UI that starts a round
     /// </summary>
-    public void ToggleStartRoundUI()
+    public void SetVis_StartRoundUI(bool enabled)
     {
         canv_startRoundUI.enabled = !canv_startRoundUI.enabled;
     }
 
     public void SpinButtonPressed()
     {
-        ToggleStartRoundUI();
+        SetVis_StartRoundUI(false);
         LM.EndStart();
         
     }
@@ -67,27 +68,27 @@ public class UIManager : MonoBehaviour
 
 
     #region Placement State
-    public void TogglePlacementUI()
+    public void SetVis_PlacementUI(bool enabled)
     {
         canv_placementUI.enabled = !canv_placementUI.enabled;
     }
 
     public void BeginRoundButtonPressed()
     {
-        TogglePlacementUI();
+        SetVis_PlacementUI(false);
         LM.EndPlacement(); 
     }
     #endregion
 
     #region Complete State
-    public void ToggleLevelWinUI()  //TODO change all these to take a bool as a param, and set enabled to that value
+    public void SetVis_LevelWinUI(bool enabled)
     {
-        canv_winUI.enabled = !canv_winUI.enabled;
+        canv_winUI.enabled = enabled;
     }
 
-    public void ToggleLevelLoseUI()
+    public void SetVis_LevelLoseUI(bool enabled)
     {
-        canv_loseUI.enabled = !canv_loseUI.enabled;
+        canv_loseUI.enabled = enabled;
     }
     #endregion
 
@@ -108,9 +109,16 @@ public class UIManager : MonoBehaviour
     }
 
 
+    public void SetVis_LevelCanvasUI(bool enabled)
+    {
+        canv_LevelCanvasUI.enabled = enabled;
+    }
+
     // TODO NEED A NEWLEVELLOADED FUNCTION THAT WILL UPDATE ALL THE UI ELEMENTS WITH VALUES FROM THE LEVELMANAGER
-    public void SetLevelManagerValues(LevelManager lm)
+    public void NewLevelWasLoaded(LevelManager lm, int roundNumber)
     {
         this.LM = lm;
+        SetRoundText(roundNumber);
+        SetVis_LevelCanvasUI(true);
     }
 }
