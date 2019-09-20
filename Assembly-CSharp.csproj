@@ -70,6 +70,8 @@
     <Compile Include="Assets\Scripts\LevelManager.cs" />
     <Compile Include="Assets\Scripts\ReturnLocation.cs" />
     <Compile Include="Assets\Scripts\ScoutScript.cs" />
+    <Compile Include="Assets\Scripts\SlotMachine.cs" />
+    <Compile Include="Assets\Scripts\SlotReel.cs" />
     <Compile Include="Assets\Scripts\SwipeToMove.cs" />
     <Compile Include="Assets\Scripts\Target.cs" />
     <Compile Include="Assets\Scripts\Tile.cs" />

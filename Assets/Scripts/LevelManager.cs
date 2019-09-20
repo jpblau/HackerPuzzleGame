@@ -19,6 +19,10 @@ public class LevelManager : MonoBehaviour
     private bool areCrownJewelsHome = true;
     private bool hasPlayerWon = false;
 
+
+    public GameObject gridGO;
+    public List<Tile> grid = new List<Tile>();
+
     [SerializeField]
     private UIManager UIM;
 
@@ -30,6 +34,14 @@ public class LevelManager : MonoBehaviour
 
         //redTeamUnits = new List<AAUnit>();
         blueTeamUnits = new List<AAUnit>();
+
+        // Get everything in our grid
+        Component[] cList = gridGO.GetComponentsInChildren(typeof(Tile), true);
+        for (int i = 0; i < cList.Length; i++)
+        {
+            grid.Add((Tile)cList[i]);
+        }
+        Debug.Log("Full Grid: " + grid);
 
 
         UIM = GameObject.FindGameObjectWithTag("UIManager").GetComponent<UIManager>();
